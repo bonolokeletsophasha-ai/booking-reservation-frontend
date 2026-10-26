@@ -111,7 +111,11 @@ function App() {
   }, [selectedDate, selectedRoom]);
 
   useEffect(() => {
-  loadBookings();
+  const timer = setTimeout(() => {
+    loadBookings();
+  }, 0);
+
+  return () => clearTimeout(timer);
 }, [loadBookings]);
 
   // Submit a new reservation.
