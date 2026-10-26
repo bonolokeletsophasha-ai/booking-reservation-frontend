@@ -615,11 +615,12 @@ const isSelected = selectedTime === slot;
               <form onSubmit={handleBookingSubmit} className="space-y-5">
                 <div>
                   <label
-                    htmlFor="fullName"
-                    className="mb-2 block text-sm font-semibold text-slate-700"
+                     htmlFor="fullName"
+                     className="mb-2 block text-sm font-bold text-[#202044]"
                   >
-                    Full name
+                   Full name
                   </label>
+
 
                   <input
                     id="fullName"
@@ -630,17 +631,20 @@ const isSelected = selectedTime === slot;
                     value={name}
                     onChange={(event) => setName(event.target.value)}
                     placeholder="Enter your full name"
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:border-violet-500 focus:ring-2 focus:ring-violet-100"
+                    className="w-full rounded-xl border border-violet-100 bg-[#F7F5FF] px-4 py-3.5 text-sm text-[#202044] placeholder:text-slate-400 transition duration-200 hover:border-violet-300 focus:border-[#5145CD] focus:bg-white focus:outline-none focus:ring-4 focus:ring-violet-100"
                   />
+
+
                 </div>
 
                 <div>
                   <label
-                    htmlFor="email"
-                    className="mb-2 block text-sm font-semibold text-slate-700"
+                     htmlFor="email"
+                     className="mb-2 block text-sm font-bold text-[#202044]"
                   >
                     Email address
                   </label>
+
 
                   <input
                     id="email"
@@ -650,39 +654,91 @@ const isSelected = selectedTime === slot;
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     placeholder="you@example.com"
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:border-violet-500 focus:ring-2 focus:ring-violet-100"
+                    className="w-full rounded-xl border border-violet-100 bg-[#F7F5FF] px-4 py-3.5 text-sm text-[#202044] placeholder:text-slate-400 transition duration-200 hover:border-violet-300 focus:border-[#5145CD] focus:bg-white focus:outline-none focus:ring-4 focus:ring-violet-100"
                   />
+
+
                 </div>
 
-                <div className="rounded-xl bg-violet-50 p-4">
-                  <p className="text-sm font-semibold text-slate-800">
-                    Booking summary
-                  </p>
+                {/* Booking Summary */}
 
-                  <p className="mt-2 text-sm text-slate-600">
-                    Room: {selectedRoom}
-                  </p>
+                <div className="overflow-hidden rounded-2xl border border-violet-100 bg-[#F7F5FF]">
+                  <div className="flex items-center gap-3 border-b border-violet-100 px-4 py-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-xl shadow-sm">
+                      📋
+                    </div>
 
-                  <p className="mt-1 text-sm text-slate-600">
-                    Date: {selectedDate || "Not selected"}
-                  </p>
 
-                  <p className="mt-1 text-sm text-slate-600">
-                    Time:{" "}
-                    {selectedTime
-                      ? formatTime(selectedTime)
-                      : "Please select a time slot"}
-                  </p>
+                    <div>
+                      <h4 className="font-extrabold text-[#202044]">
+                        Booking summary
+                      </h4>
+
+                      <p className="mt-0.5 text-xs text-slate-500">
+                          Review your meeting details
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3 p-4">
+                    <div className="flex items-center justify-between gap-4">
+                      <span className="text-sm text-slate-500">Meeting room</span>
+
+                        <span className="text-right text-sm font-bold text-[#202044]">
+                         {selectedRoom}
+                        </span>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-4">
+                      <span className="text-sm text-slate-500">Date</span>
+
+                      <span className="text-right text-sm font-semibold text-[#202044]">
+                         {selectedDate || "Not selected"}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-4">
+                      <span className="text-sm text-slate-500">Meeting time</span>
+
+                      <span
+                        className={`rounded-lg px-3 py-1.5 text-xs font-bold ${
+                          selectedTime
+                          ? "bg-[#D7F8E8] text-emerald-800"
+                          : "bg-white text-slate-500"
+                        }`}
+                      >
+                      {selectedTime
+                       ? formatTime(selectedTime)
+                       : "Select a time slot"}
+                      </span>
+                    </div>
+                  </div>
+
+
                 </div>
 
+                {/* Confirm Reservation */}
                 <button
                   type="submit"
                   disabled={!selectedTime || submitting || loadingSlots}
-                  className="w-full rounded-xl bg-violet-600 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-violet-700 disabled:cursor-not-allowed disabled:bg-slate-300 sm:w-auto"
+                  className="group inline-flex w-full items-center justify-center gap-3 rounded-xl bg-[#5145CD] px-5 py-4 text-sm font-bold text-white shadow-lg shadow-violet-200 transition duration-300 hover:-translate-y-0.5 hover:bg-violet-700 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5145CD] disabled:cursor-not-allowed disabled:translate-y-0 disabled:bg-slate-300 disabled:shadow-none sm:w-auto"
+
                 >
-                  {submitting ? "Confirming booking..." : "Confirm reservation"}
+
+                {submitting ? "Confirming reservation..." : "Confirm reservation"}
+
+
+
+                {!submitting && (
+                  <span className="text-lg transition-transform duration-200 group-hover:translate-x-1">
+                      →
+                  </span>
+                )}
+
+
                 </button>
               </form>
+
             </section>
 
             {/* Reservations List */}
@@ -737,48 +793,60 @@ function ReservationsSection({
       </div>
 
       {showFilters && (
-        <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div>
-            <label
-              htmlFor="reservationRoom"
-              className="mb-2 block text-sm font-semibold text-slate-700"
-            >
-              Meeting room
-            </label>
 
-            <select
-              id="reservationRoom"
-              value={selectedRoom}
-              onChange={(event) => setSelectedRoom(event.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm"
-            >
-              {rooms.map((room) => (
-                <option key={room} value={room}>
-                  {room}
-                </option>
-              ))}
-            </select>
-          </div>
+      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label
+           htmlFor="reservationRoom"
+           className="mb-2 block text-sm font-bold text-[#202044]"
+          >
+           Meeting room
+          </label>
 
-          <div>
-            <label
-              htmlFor="reservationDate"
-              className="mb-2 block text-sm font-semibold text-slate-700"
-            >
-              Reservation date
-            </label>
 
-            <input
-              id="reservationDate"
-              type="date"
-              min={getToday()}
-              value={selectedDate}
-              onChange={(event) => setSelectedDate(event.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm"
-            />
-          </div>
+          <select
+            id="reservationRoom"
+            value={selectedRoom}
+            onChange={(event) => setSelectedRoom(event.target.value)}
+            className="w-full rounded-xl border border-violet-100 bg-[#F7F5FF] px-4 py-3.5 text-sm font-medium text-[#202044] transition hover:border-violet-300 focus:border-[#5145CD] focus:bg-white focus:outline-none focus:ring-4 focus:ring-violet-100"
+          >
+          {rooms.map((room) => (
+          <option key={room} value={room}>
+          {room}
+          </option>
+          ))}
+          </select>
         </div>
-      )}
+
+        <div>
+          <label
+            htmlFor="reservationDate"
+            className="mb-2 flex items-center gap-2 text-sm font-bold text-[#202044]"
+          >
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#D7F8E8] text-base">
+             📅
+          </span>
+            Reservation date
+          </label>
+
+          <input
+            id="reservationDate"
+            type="date"
+            min={getToday()}
+            value={selectedDate}
+            onChange={(event) => setSelectedDate(event.target.value)}
+            className="w-full rounded-xl border border-violet-100 bg-[#F7F5FF] px-4 py-3.5 text-sm font-medium text-[#202044] transition duration-200 hover:border-violet-300 focus:border-[#5145CD] focus:bg-white focus:outline-none focus:ring-4 focus:ring-violet-100"
+          />
+
+          <p className="mt-2 text-xs leading-5 text-slate-500">
+             Choose today or a future date for your meeting.
+          </p>
+        </div>
+
+
+      </div>
+    )}
+
 
       {loading ? (
         <p className="py-6 text-sm text-slate-500">
