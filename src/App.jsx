@@ -291,33 +291,50 @@ function App() {
         </header>
 
         {/* Welcome Banner */}
-        <section className="mb-8 overflow-hidden rounded-2xl bg-violet-600 p-6 text-white sm:p-8">
-          <div className="max-w-2xl">
-            <p className="mb-3 text-sm font-medium text-violet-200">
-              WELCOME TO RESERVESPACE
-            </p>
 
-            <h3 className="text-2xl font-bold sm:text-3xl">
-              Make room for great ideas.
-            </h3>
+        <section className="relative mb-8 overflow-hidden rounded-3xl bg-gradient-to-br from-[#5145CD] via-violet-600 to-[#7C3AED] p-6 text-white shadow-xl shadow-violet-200/60 sm:p-8 lg:p-10">
+          {/* Decorative background shapes */}
+          <div className="pointer-events-none absolute -right-10 -top-16 h-56 w-56 rounded-full border-[30px] border-white/10" />
 
-            <p className="mt-3 max-w-xl text-sm leading-6 text-violet-100 sm:text-base">
-              Book meeting rooms in just a few clicks. Choose your room,
-              select a date, and find a time that suits your team.
-            </p>
+           <div className="pointer-events-none absolute right-24 top-28 h-20 w-20 rounded-full bg-[#FF8066]/30 blur-xl" />
+
+            <div className="pointer-events-none absolute bottom-0 right-0 h-32 w-32 translate-x-10 translate-y-10 rounded-full bg-white/10" />
+
+              <div className="relative z-10 max-w-2xl">
+               <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold tracking-widest text-violet-100 backdrop-blur-sm">
+                <span className="h-2 w-2 rounded-full bg-[#D7F8E8]" />
+                   WELCOME TO RESERVESPACE
+                </span>
+
+
+               <h3 className="max-w-xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+                Make room for{" "}
+               <span className="text-[#D7F8E8]">great ideas.</span>
+               </h3>
+
+             <p className="mt-4 max-w-lg text-sm leading-7 text-violet-100 sm:text-base">
+              Great meetings start with the right space. Find your perfect room,
+              choose a time that works for your team, and get straight to what matters.
+             </p>
 
             <button
               onClick={() =>
-                document
-                  .getElementById("booking-section")
-                  ?.scrollIntoView({ behavior: "smooth" })
+              document
+              .getElementById("booking-section")
+              ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="mt-6 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-violet-700 transition hover:bg-violet-50"
-            >
-              Make a reservation
+              className="group mt-7 inline-flex items-center gap-3 rounded-xl bg-white px-5 py-3.5 text-sm font-bold text-[#5145CD] shadow-lg shadow-indigo-950/10 transition duration-300 hover:-translate-y-1 hover:bg-[#D7F8E8] hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+
+                 Make a reservation
+                <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
             </button>
+
+
           </div>
         </section>
+
 
         {/* Feedback Messages */}
         {error && (
@@ -364,21 +381,80 @@ function App() {
                     Meeting room
                   </label>
 
-                  <select
-                    id="room"
-                    value={selectedRoom}
-                    onChange={(event) => {
-                      setSelectedRoom(event.target.value);
-                      setSuccess("");
-                    }}
-                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm focus:border-violet-500 focus:ring-2 focus:ring-violet-100"
-                  >
-                    {rooms.map((room) => (
-                      <option key={room} value={room}>
-                        {room}
-                      </option>
-                    ))}
-                  </select>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                {rooms.map((room, index) => {
+                const isSelected = selectedRoom === room;
+
+
+                const roomDetails = [
+                  {
+                    icon: "🪴",
+                    description: "A comfortable space for team meetings.",
+                    accent: "bg-emerald-100",
+                  },
+                  {
+                    icon: "💡",
+                    description: "A bright space for creative thinking.",
+                    accent: "bg-amber-100",
+                  },
+                  {
+                    icon: "🚀",
+                    description: "A focused space for big ideas.",
+                    accent: "bg-rose-100",
+                  },
+                ];
+
+                const details = roomDetails[index] || roomDetails[0];
+
+                  return (
+                    <button
+                     key={room}
+                     type="button"
+                     onClick={() => {
+                        setSelectedRoom(room);
+                        setSuccess("");
+                 }}
+                   aria-pressed={isSelected}
+                   className={`group relative rounded-2xl border-2 p-4 text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-lg ${
+                   isSelected
+                   ? "border-[#5145CD] bg-[#F7F5FF] shadow-md shadow-violet-100"
+                   : "border-slate-100 bg-white hover:border-violet-200"
+                }`}
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className={`flex h-11 w-11 items-center justify-center rounded-xl text-xl ${details.accent}`}>
+                    {details.icon}
+                  </div>
+
+                  <span className={`flex h-6 w-6 items-center justify-center rounded-full border text-xs font-bold transition ${
+                       isSelected
+                       ? "border-[#5145CD] bg-[#5145CD] text-white"
+                       : "border-slate-200 text-transparent group-hover:border-violet-300"
+                 }`}
+              >
+                 ✓
+                </span>
+              </div>
+
+              <h4 className="mt-4 font-bold text-[#202044]">{room}</h4>
+
+              <p className="mt-1 text-xs leading-5 text-slate-500">
+                {details.description}
+              </p>
+
+              {isSelected && (
+                <span className="mt-3 inline-block rounded-full bg-[#D7F8E8] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-800">
+                 Selected
+                </span>
+             )}
+          </button>
+         );
+
+
+        })}
+
+        </div>
+
                 </div>
 
                 <div>
@@ -405,59 +481,124 @@ function App() {
             </section>
 
             {/* Available Time Slots */}
-            <section className="mb-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
-              <div className="mb-6">
-                <h3 className="text-lg font-bold text-slate-900">
-                  Available time slots
-                </h3>
 
-                <p className="mt-1 text-sm text-slate-500">
-                  Choose a time for your meeting.
-                </p>
+            <section className="mb-8 overflow-hidden rounded-3xl border border-violet-100 bg-white p-5 shadow-sm shadow-violet-100/50 sm:p-7">
+              <div className="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#D7F8E8] text-lg">
+                       ◷
+                    </span>
+
+
+                    <h3 className="text-lg font-extrabold text-[#202044]">
+                       Available time slots
+                    </h3>
+                  </div>
+
+                    <p className="mt-2 text-sm text-slate-500">
+                       Choose a time that works best for your meeting.
+                    </p>
+                </div>
+
+                {!loadingSlots && availableSlots.length > 0 && (
+                  <span className="inline-flex w-fit items-center gap-2 rounded-full bg-[#D7F8E8] px-3 py-2 text-xs font-bold text-emerald-800">
+                     <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                     {availableSlots.length} {availableSlots.length === 1 ? "slot" : "slots"} available
+                     </span>
+                )}
+
+
               </div>
 
-              {loadingSlots ? (
-                <p className="py-6 text-sm text-slate-500">
-                  Checking room availability...
-                </p>
-              ) : availableSlots.length > 0 ? (
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {availableSlots.map((slot) => (
-                    <button
-                      key={slot}
-                      type="button"
-                      onClick={() => {
-                        setSelectedTime(slot);
-                        setError("");
-                        setSuccess("");
-                      }}
-                      aria-pressed={selectedTime === slot}
-                      className={`rounded-xl border px-3 py-4 text-sm font-medium transition ${
-                        selectedTime === slot
-                          ? "border-violet-600 bg-violet-600 text-white shadow-md"
-                          : "border-slate-200 bg-white text-slate-700 hover:border-violet-400 hover:bg-violet-50"
-                      }`}
-                    >
-                      {formatTime(slot)}
-                    </button>
-                  ))}
-                </div>
-              ) : (
-                <div className="rounded-xl border border-dashed border-slate-200 px-4 py-8 text-center">
-                  <p className="font-semibold text-slate-700">
-                    No available slots
-                  </p>
+              {loadingSlots ? ( 
+                <div className="flex items-center justify-center gap-3 rounded-2xl bg-[#F7F5FF] px-4 py-10"> 
+                  <span className="h-5 w-5 animate-spin rounded-full border-2 border-violet-200 border-t-[#5145CD]" />
 
-                  <p className="mt-1 text-sm text-slate-500">
-                    Choose another date or meeting room.
-                  </p>
+                    <p className="text-sm font-medium text-slate-600">
+                       Checking room availability...
+                    </p>
                 </div>
-              )}
 
-              <p className="mt-4 text-xs text-slate-400">
-                Available times are retrieved directly from the booking server.
-              </p>
+
+              ) : availableSlots.length > 0 ? ( 
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+               {availableSlots.map((slot) => {
+const isSelected = selectedTime === slot;
+
+
+    return (
+      <button
+        key={slot}
+        type="button"
+        onClick={() => {
+          setSelectedTime(slot);
+          setError("");
+          setSuccess("");
+        }}
+        aria-pressed={isSelected}
+        className={`group relative flex min-h-20 flex-col items-center justify-center gap-1 rounded-2xl border-2 px-3 py-4 text-sm font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5145CD] ${
+          isSelected
+            ? "border-[#5145CD] bg-[#5145CD] text-white shadow-lg shadow-violet-200"
+            : "border-slate-100 bg-slate-50/70 text-[#202044] hover:border-[#5145CD]/40 hover:bg-[#F7F5FF]"
+        }`}
+      >
+        <span
+          className={`text-lg transition-transform duration-200 group-hover:scale-105 ${
+            isSelected ? "text-white" : "text-[#5145CD]"
+          }`}
+        >
+          {formatTime(slot)}
+        </span>
+
+        <span
+          className={`text-[10px] font-semibold uppercase tracking-wider ${
+            isSelected ? "text-violet-100" : "text-emerald-700"
+          }`}
+        >
+          {isSelected ? "Selected" : "Available"}
+        </span>
+
+        {isSelected && (
+          <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-white/20 text-xs text-white">
+            ✓
+          </span>
+        )}
+      </button>
+    );
+             })}
+              </div>
+
+
+              ) : ( <div className="rounded-2xl border border-dashed border-violet-200 bg-[#F7F5FF]/70 px-4 py-10 text-center"> <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-2xl shadow-sm">
+                     ◷ </div>
+
+                       <p className="mt-4 font-bold text-[#202044]">
+                        No available slots
+                        </p>
+
+                        <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-slate-500">
+                          All times for this room are booked on your selected date. Try another
+                          date or choose a different meeting room.
+                        </p>
+                    </div>
+
+
+                  )}
+
+                  <div className="mt-5 flex items-start gap-2 border-t border-slate-100 pt-4">
+                     <span className="mt-0.5 text-sm text-[#5145CD]">ⓘ</span>
+
+
+                      <p className="text-xs leading-5 text-slate-500">
+                          Availability is retrieved from the booking server and updates when
+                           reservations are made or cancelled.
+                      </p>
+
+
+                  </div>
             </section>
+
 
             {/* Booking Form */}
             <section className="mb-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
