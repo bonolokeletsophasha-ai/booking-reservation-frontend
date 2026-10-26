@@ -771,140 +771,184 @@ const isSelected = selectedTime === slot;
 }
 
 function ReservationsSection({
-  bookings,
-  loading,
-  onCancel,
-  showFilters = false,
-  selectedRoom,
-  selectedDate,
-  setSelectedRoom,
-  setSelectedDate,
+bookings,
+loading,
+onCancel,
+showFilters = false,
+selectedRoom,
+selectedDate,
+setSelectedRoom,
+setSelectedDate,
 }) {
-  return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
-      <div className="mb-5">
-        <h3 className="text-lg font-bold text-slate-900">
-          My Reservations
-        </h3>
+return ( 
+<section className="overflow-hidden rounded-3xl border border-violet-100 bg-white p-5 shadow-sm shadow-violet-100/50 sm:p-7">
+{/* Section heading */} 
+<div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"> 
+  <div> 
+    <div className="flex items-center gap-3"> 
+      <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#D7F8E8] text-xl">
+          ▤ 
+      </span>
 
-        <p className="mt-1 text-sm text-slate-500">
-          Confirmed bookings for the selected meeting room and date.
-        </p>
-      </div>
-
-      {showFilters && (
-
-      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div>
-          <label
-           htmlFor="reservationRoom"
-           className="mb-2 block text-sm font-bold text-[#202044]"
-          >
-           Meeting room
-          </label>
-
-
-          <select
-            id="reservationRoom"
-            value={selectedRoom}
-            onChange={(event) => setSelectedRoom(event.target.value)}
-            className="w-full rounded-xl border border-violet-100 bg-[#F7F5FF] px-4 py-3.5 text-sm font-medium text-[#202044] transition hover:border-violet-300 focus:border-[#5145CD] focus:bg-white focus:outline-none focus:ring-4 focus:ring-violet-100"
-          >
-          {rooms.map((room) => (
-          <option key={room} value={room}>
-          {room}
-          </option>
-          ))}
-          </select>
-        </div>
 
         <div>
-          <label
-            htmlFor="reservationDate"
-            className="mb-2 flex items-center gap-2 text-sm font-bold text-[#202044]"
-          >
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#D7F8E8] text-base">
-             📅
-          </span>
-            Reservation date
-          </label>
-
-          <input
-            id="reservationDate"
-            type="date"
-            min={getToday()}
-            value={selectedDate}
-            onChange={(event) => setSelectedDate(event.target.value)}
-            className="w-full rounded-xl border border-violet-100 bg-[#F7F5FF] px-4 py-3.5 text-sm font-medium text-[#202044] transition duration-200 hover:border-violet-300 focus:border-[#5145CD] focus:bg-white focus:outline-none focus:ring-4 focus:ring-violet-100"
-          />
-
-          <p className="mt-2 text-xs leading-5 text-slate-500">
-             Choose today or a future date for your meeting.
-          </p>
-        </div>
-
-
-      </div>
-    )}
-
-
-      {loading ? (
-        <p className="py-6 text-sm text-slate-500">
-          Loading reservations...
-        </p>
-      ) : bookings.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-slate-200 px-4 py-10 text-center">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-xl">
-            ▤
-          </div>
-
-          <p className="font-semibold text-slate-700">
-            No reservations to display
-          </p>
+          <h3 className="text-lg font-extrabold text-[#202044]">
+            My Reservations
+          </h3>
 
           <p className="mt-1 text-sm text-slate-500">
-            Confirmed bookings for this room and date will appear here.
+            Keep track of your upcoming meetings.
           </p>
         </div>
-      ) : (
-        <div className="space-y-4">
-          {bookings.map((booking) => (
-            <article
-              key={booking.id}
-              className="flex flex-col gap-4 rounded-xl border border-slate-200 p-4 sm:flex-row sm:items-center sm:justify-between"
-            >
-              <div>
-                <h4 className="font-semibold text-slate-900">
-                  {booking.name}
-                </h4>
+      </div>
+    </div>
 
-                <p className="mt-1 text-sm text-slate-500">
+    {!loading && bookings.length > 0 && (
+      <span className="inline-flex w-fit items-center gap-2 rounded-full bg-[#F7F5FF] px-3 py-2 text-xs font-bold text-[#5145CD]">
+        <span className="h-2 w-2 rounded-full bg-[#5145CD]" />
+        {bookings.length}{" "}
+        {bookings.length === 1 ? "reservation" : "reservations"}
+      </span>
+    )}
+  </div>
+
+  {/* Room and date filters */}
+  {showFilters && (
+    <div className="mb-6 grid grid-cols-1 gap-4 rounded-2xl border border-violet-100 bg-[#F7F5FF]/70 p-4 sm:grid-cols-2">
+      <div>
+        <label
+          htmlFor="reservationRoom"
+          className="mb-2 block text-sm font-bold text-[#202044]"
+        >
+          Meeting room
+        </label>
+
+        <select
+          id="reservationRoom"
+          value={selectedRoom}
+          onChange={(event) => setSelectedRoom(event.target.value)}
+          className="w-full rounded-xl border border-violet-100 bg-white px-4 py-3 text-sm font-medium text-[#202044] transition hover:border-violet-300 focus:border-[#5145CD] focus:outline-none focus:ring-4 focus:ring-violet-100"
+        >
+          {rooms.map((room) => (
+            <option key={room} value={room}>
+              {room}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label
+          htmlFor="reservationDate"
+          className="mb-2 flex items-center gap-2 text-sm font-bold text-[#202044]"
+        >
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#D7F8E8] text-base">
+            📅
+          </span>
+          Reservation date
+        </label>
+
+        <input
+          id="reservationDate"
+          type="date"
+          min={getToday()}
+          value={selectedDate}
+          onChange={(event) => setSelectedDate(event.target.value)}
+          className="w-full rounded-xl border border-violet-100 bg-white px-4 py-3 text-sm font-medium text-[#202044] transition hover:border-violet-300 focus:border-[#5145CD] focus:outline-none focus:ring-4 focus:ring-violet-100"
+        />
+      </div>
+    </div>
+  )}
+
+  {/* Loading state */}
+  {loading ? (
+    <div className="flex items-center justify-center gap-3 rounded-2xl bg-[#F7F5FF] px-4 py-10">
+      <span className="h-5 w-5 animate-spin rounded-full border-2 border-violet-200 border-t-[#5145CD]" />
+
+      <p className="text-sm font-medium text-slate-600">
+        Loading reservations...
+      </p>
+    </div>
+  ) : bookings.length === 0 ? (
+    /* Empty state */
+    <div className="rounded-2xl border border-dashed border-violet-200 bg-[#F7F5FF]/60 px-4 py-10 text-center">
+      <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white text-3xl shadow-sm">
+        🗓️
+      </div>
+
+      <h4 className="mt-4 font-bold text-[#202044]">
+        No reservations yet
+      </h4>
+
+      <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-slate-500">
+        There are no confirmed bookings for this meeting room and date.
+        Try another date or room, or make a new reservation.
+      </p>
+    </div>
+  ) : (
+    /* Reservation cards */
+    <div className="space-y-4">
+      {bookings.map((booking) => (
+        <article
+          key={booking.id}
+          className="group rounded-2xl border border-slate-100 bg-white p-4 transition duration-200 hover:border-violet-200 hover:shadow-lg hover:shadow-violet-100/50 sm:p-5"
+        >
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex min-w-0 items-start gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#F7F5FF] text-xl transition group-hover:bg-[#D7F8E8]">
+                👤
+              </div>
+
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h4 className="break-words font-extrabold text-[#202044]">
+                    {booking.name}
+                  </h4>
+
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[#D7F8E8] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-800">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                    {booking.status}
+                  </span>
+                </div>
+
+                <p className="mt-1 break-all text-sm text-slate-500">
                   {booking.email}
                 </p>
 
-                <p className="mt-2 text-sm text-slate-700">
-                  {booking.resource} · {booking.date} ·{" "}
-                  {formatTime(booking.time)}
-                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-[#F7F5FF] px-2.5 py-2 text-xs font-semibold text-[#5145CD]">
+                    <span>▤</span>
+                    {booking.resource}
+                  </span>
 
-                <span className="mt-2 inline-block rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold capitalize text-emerald-700">
-                  {booking.status}
-                </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-slate-50 px-2.5 py-2 text-xs font-semibold text-slate-600">
+                    <span>📅</span>
+                    {booking.date}
+                  </span>
+
+                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-slate-50 px-2.5 py-2 text-xs font-semibold text-slate-600">
+                    <span>◷</span>
+                    {formatTime(booking.time)}
+                  </span>
+                </div>
               </div>
+            </div>
 
-              <button
-                type="button"
-                onClick={() => onCancel(booking.id)}
-                className="rounded-lg border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50"
-              >
-                Cancel reservation
-              </button>
-            </article>
-          ))}
-        </div>
-      )}
-    </section>
-  );
+            <button 
+              type="button" 
+              onClick={() => onCancel(booking.id)} 
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-rose-200 bg-white px-4 py-3 text-sm font-bold text-rose-600 transition duration-200 hover:border-rose-300 hover:bg-rose-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500 sm:self-center" > 
+              <span aria-hidden="true">×</span>
+               Cancel reservation 
+            </button>
+          </div> 
+        </article> 
+      ))} 
+    </div> 
+  )} 
+</section>
+);
 }
+
 
 export default App;
