@@ -1,4 +1,3 @@
-```css
 @import "tailwindcss";
 
 :root {
@@ -53,4 +52,3 @@ select:focus-visible {
   color: #202044;
   background: #d7f8e8;
 }
-```
