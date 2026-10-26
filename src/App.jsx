@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback,useEffect, useState } from "react";
 import {
   getAvailableSlots,
   createBooking,
@@ -90,7 +90,7 @@ function App() {
   }, [selectedDate, selectedRoom]);
 
   // Load confirmed reservations for the selected room and date.
-  async function loadBookings() {
+  const loadBookings = useCallback(async () => {
     if (!selectedDate || !selectedRoom) return;
 
     setLoadingBookings(true);
@@ -108,11 +108,11 @@ function App() {
     } finally {
       setLoadingBookings(false);
     }
-  }
+  }, [selectedDate, selectedRoom]);
 
   useEffect(() => {
-    loadBookings();
-  }, [selectedDate, selectedRoom]);
+  loadBookings();
+}, [loadBookings]);
 
   // Submit a new reservation.
   async function handleBookingSubmit(event) {
