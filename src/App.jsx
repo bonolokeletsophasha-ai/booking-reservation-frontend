@@ -202,13 +202,50 @@ function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 md:flex">
+    <div className="min-h-screen bg-[#F0EDFF] text-[#202044] md:flex">
       {/* Sidebar */}
-      <aside className="w-full border-b border-slate-200 bg-white p-6 md:min-h-screen md:w-64 md:border-b-0 md:border-r">
+     <aside className="w-full border-b border-violet-200 bg-gradient-to-b from-[#E8E3FF] to-[#F0EDFF] p-6 md:min-h-screen md:w-64 md:border-b-0 md:border-r">
         <div className="mb-10 flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-600 text-xl font-bold text-white">
-            R
-          </div>
+          <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-[#5145CD] via-violet-600 to-[#7C3AED] shadow-lg shadow-violet-300/60">
+            {/* Decorative logo detail */}
+            <div className="absolute -right-3 -top-3 h-8 w-8 rounded-full border-4 border-white/20" />
+
+            {/* Doorway symbol */}
+            <svg
+             viewBox="0 0 48 48"
+             fill="none"
+             xmlns="http://www.w3.org/2000/svg"
+             className="relative h-8 w-8"
+             aria-label="ReserveSpace logo"
+             role="img"
+            >
+            <path
+              d="M10 39V12C10 9.8 11.8 8 14 8H29C31.2 8 33 9.8 33 12V39"
+              stroke="#D7F8E8"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+
+            <path
+              d="M17 39V17H33V39"
+              stroke="white"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+
+            <path
+              d="M33 18L39 12L33 6"
+              stroke="#FF8066"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+
+            <circle cx="27" cy="29" r="1.8" fill="#D7F8E8" />
+          </svg>
+        </div>
 
           <div>
             <h1 className="text-xl font-bold tracking-tight text-slate-900">
@@ -276,7 +313,7 @@ function App() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3 self-start rounded-xl border border-slate-200 bg-white px-4 py-3 sm:self-auto">
+          <div className="flex items-center gap-3 self-start rounded-xl border border-violet-100 bg-[#FAF9FF] px-4 py-3 shadow-sm sm:self-auto">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-100 font-semibold text-violet-700">
               U
             </div>
@@ -360,7 +397,7 @@ function App() {
             {/* Room and Date Selection */}
             <section
               id="booking-section"
-              className="mb-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7"
+              className="mb-8 rounded-3xl border border-violet-100 bg-[#FAF9FF] p-5 shadow-sm shadow-violet-200/40 sm:p-7"
             >
               <div className="mb-6">
                 <h3 className="text-lg font-bold text-slate-900">
@@ -840,12 +877,10 @@ return (
       <div>
         <label
           htmlFor="reservationDate"
-          className="mb-2 flex items-center gap-2 text-sm font-bold text-[#202044]"
+          className="mb-2 flex min-h-8 items-center gap-2 text-sm font-bold text-[#202044]"
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#D7F8E8] text-base">
-            📅
-          </span>
-          Reservation date
+          
+          <span>Reservation date</span>
         </label>
 
         <input
@@ -891,7 +926,7 @@ return (
       {bookings.map((booking) => (
         <article
           key={booking.id}
-          className="group rounded-2xl border border-slate-100 bg-white p-4 transition duration-200 hover:border-violet-200 hover:shadow-lg hover:shadow-violet-100/50 sm:p-5"
+          className="group rounded-2xl border border-violet-100 bg-[#FAF9FF] p-4 transition duration-200 hover:border-violet-200 hover:shadow-lg hover:shadow-violet-100/50 sm:p-5"
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex min-w-0 items-start gap-4">
