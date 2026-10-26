@@ -41,11 +41,6 @@ export async function createBooking(bookingDetails) {
 
 // Fetch confirmed bookings for a selected date and room
 export async function getBookingsByDateAndResource(date, resource) {
-  const params = new URLSearchParams({
-    date,
-    resource,
-  });
-
   const response = await fetch(
     `${API_BASE_URL}/bookings/${encodeURIComponent(date)}/${encodeURIComponent(resource)}`
   );

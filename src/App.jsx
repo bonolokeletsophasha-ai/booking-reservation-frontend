@@ -852,10 +852,11 @@ return (
   {/* Room and date filters */}
   {showFilters && (
     <div className="mb-6 grid grid-cols-1 gap-4 rounded-2xl border border-violet-100 bg-[#F7F5FF]/70 p-4 sm:grid-cols-2">
-      <div>
+      {/* Meeting Room Filter */}
+      <div className="flex flex-col">
         <label
           htmlFor="reservationRoom"
-          className="mb-2 block text-sm font-bold text-[#202044]"
+          className="mb-2 flex h-8 items-center text-sm font-bold text-[#202044]"
         >
           Meeting room
         </label>
@@ -864,35 +865,35 @@ return (
           id="reservationRoom"
           value={selectedRoom}
           onChange={(event) => setSelectedRoom(event.target.value)}
-          className="w-full rounded-xl border border-violet-100 bg-white px-4 py-3 text-sm font-medium text-[#202044] transition hover:border-violet-300 focus:border-[#5145CD] focus:outline-none focus:ring-4 focus:ring-violet-100"
+          className="h-[50px] w-full rounded-xl border border-violet-100 bg-white px-4 text-sm font-medium text-[#202044] transition hover:border-violet-300 focus:border-[#5145CD] focus:outline-none focus:ring-4 focus:ring-violet-100"
         >
-          {rooms.map((room) => (
-            <option key={room} value={room}>
-              {room}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        <label
-          htmlFor="reservationDate"
-          className="mb-2 flex min-h-8 items-center gap-2 text-sm font-bold text-[#202044]"
-        >
-          
-          <span>Reservation date</span>
-        </label>
-
-        <input
-          id="reservationDate"
-          type="date"
-          min={getToday()}
-          value={selectedDate}
-          onChange={(event) => setSelectedDate(event.target.value)}
-          className="w-full rounded-xl border border-violet-100 bg-white px-4 py-3 text-sm font-medium text-[#202044] transition hover:border-violet-300 focus:border-[#5145CD] focus:outline-none focus:ring-4 focus:ring-violet-100"
-        />
-      </div>
+        {rooms.map((room) => (
+          <option key={room} value={room}>
+           {room}
+          </option>
+        ))}
+      </select>
     </div>
+
+    {/* Reservation Date Filter */}
+    <div className="flex flex-col">
+      <label
+        htmlFor="reservationDate"
+        className="mb-2 flex h-8 items-center text-sm font-bold text-[#202044]"
+      >
+        Reservation date
+      </label>
+
+      <input
+        id="reservationDate"
+        type="date"
+        min={getToday()}
+        value={selectedDate}
+        onChange={(event) => setSelectedDate(event.target.value)}
+        className="h-[50px] w-full rounded-xl border border-violet-100 bg-white px-4 text-sm font-medium text-[#202044] transition hover:border-violet-300 focus:border-[#5145CD] focus:outline-none focus:ring-4 focus:ring-violet-100"
+      />
+    </div>
+  </div>
   )}
 
   {/* Loading state */}
